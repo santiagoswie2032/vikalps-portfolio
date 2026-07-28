@@ -142,3 +142,39 @@ const Projects = () => {
             prevStars.map(s => s.id === starId ? { ...s, isDragging: true } : s)
         );
     };
+
+    const handleStarTouchStart = (starId: number) => (e: React.TouchEvent) => {
+        e.stopPropagation();
+        setDraggedStar(starId);
+        isDraggingRef.current = true;
+        setStars(prevStars =>
+            prevStars.map(s => s.id === starId ? { ...s, isDragging: true } : s)
+        );
+    };
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            if (draggedStar !== null && containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                // Keep within bounds
+                const clampedX = Math.max(0, Math.min(95, x));
+                const clampedY = Math.max(0, Math.min(95, y));
+
+                setStars(prevStars =>
+                    prevStars.map(s =>
+                        s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s
+                    )
+                );
+            }
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            if (draggedStar !== null && containerRef.current && e.touches.length > 0) {
+                const rect = containerRef.current.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                const y = ((touch.clientY - rect.top) / rect.height) * 100;
+
