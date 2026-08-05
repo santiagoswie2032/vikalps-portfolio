@@ -11,7 +11,7 @@ const Experience = () => {
       title: "Frontend Developer Intern",
       company: "BrainQuest",
       location: "Remote",
-      period: "March 2026 – May 2026",
+      period: "March 2026 – June 2026",
       description: [
         "Engineered responsive, dynamic user interfaces using React.js, optimizing component rendering logic to reduce average page load times by 20%.",
         "Collaborated with product stakeholders to translate UI/UX wireframes into functional, interactive web components, ensuring seamless cross-browser compatibility.",
