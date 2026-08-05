@@ -204,3 +204,106 @@ const About = () => {
     { id: 15, image: stickerImages[14], initialX: -100, initialY: 160, finalX: -400, finalY: 320, mobileInitialX: -70, mobileInitialY: 110, mobileFinalX: -150, mobileFinalY: 200 },
     { id: 16, image: stickerImages[15], initialX: 130, initialY: -100, finalX: -600, finalY: 100, mobileInitialX: 90, mobileInitialY: -70, mobileFinalX: -200, mobileFinalY: 80 },
   ];
+
+  const getStickerStyle = (sticker: typeof stickers[0]) => {
+    const progress = scrollProgress; // Direct progress for spreading effect when closer
+    const isMobile = window.innerWidth < 768;
+    const isVerySmall = window.innerWidth < 375; // iPhone SE and similar
+
+    // Use mobile positioning on smaller screens
+    const initialX = isMobile ? sticker.mobileInitialX : sticker.initialX;
+    const initialY = isMobile ? sticker.mobileInitialY : sticker.initialY;
+    const finalX = isMobile ? sticker.mobileFinalX : sticker.finalX;
+    const finalY = isMobile ? sticker.mobileFinalY : sticker.finalY;
+
+    // Further constrain for very small screens to prevent ANY horizontal overflow
+    const constrainedFinalX = isVerySmall
+      ? Math.max(-100, Math.min(100, finalX * 0.3))
+      : isMobile
+        ? Math.max(-150, Math.min(150, finalX * 0.5))
+        : finalX;
+    const constrainedFinalY = isVerySmall ? finalY * 0.6 : finalY * 0.8;
+
+    const x = initialX + (constrainedFinalX - initialX) * progress;
+    const y = initialY + (constrainedFinalY - initialY) * progress;
+    const scale = isVerySmall ? 0.4 + (0.15 * progress) : isMobile ? 0.6 + (0.2 * progress) : 0.8 + (0.4 * progress);
+    const opacity = 0.9 + (0.1 * progress);
+    const rotation = progress * 20; // Add slight rotation
+
+    return {
+      transform: `translate(${x}px, ${y}px) scale(${scale}) rotate(${rotation}deg)`,
+      opacity,
+      transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
+      willChange: 'transform, opacity',
+      width: isVerySmall ? '50px' : isMobile ? '60px' : '80px',
+      height: isVerySmall ? '50px' : isMobile ? '60px' : '80px',
+      filter: `drop-shadow(0 4px 8px ${themeColors.effects.dropShadow})`
+    };
+  };
+
+  return (
+    <section id="about" ref={sectionRef} className="min-h-screen" style={{
+      background: themeColors.background.sections?.about || themeColors.background.gradient,
+      transition: 'background 0.3s ease-in-out',
+      width: '100%',
+      maxWidth: '100vw',
+      contain: 'layout style'
+    }}>
+      {/* Hero Section */}
+      <div className="py-10 md:py-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start max-w-6xl mx-auto gap-8">
+            <div className="text-left w-full md:w-auto">
+              <div className="ascii-container justify-start text-3xl md:text-4xl lg:text-5xl">
+                <AsciiMorphText text="Hi, I'm Vikalp Bordekar" />
+              </div>
+              <div className="hero-subtitle justify-start text-base md:text-lg lg:text-xl mt-2">
+                <div className="flex flex-wrap items-center justify-start">
+                  <span className={isDarkMode ? 'hero-subtitle-dark' : 'hero-subtitle-light'}>I am a&nbsp;</span>
+                  <TypewriterCarousel roles={roles} className={isDarkMode ? 'hero-subtitle-dark' : 'hero-subtitle-light'} />
+                </div>
+              </div>
+              <div className="hero-buttons flex justify-start gap-3 mt-4">
+                <button
+                  className="hero-action-btn text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5"
+                  onClick={() => {
+                    window.open('/resume.pdf', '_blank');
+                  }}
+                >
+                  Resume →
+                </button>
+                <Link
+                  to="/contact"
+                  className="hero-action-btn text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5"
+                >
+                  Contact →
+                </Link>
+              </div>
+            </div>
+            <div className="hidden md:block relative" style={{ 
+              fontSize: '0.75rem', 
+              lineHeight: '1.1', 
+              fontFamily: 'monospace', 
+              minHeight: '150px', 
+              color: isDarkMode ? themeColors.primary : themeColors.colors.pink[500],
+              marginTop: '-180px',
+              zIndex: 10
+            }}>
+              <pre className="m-0 p-0 select-none pointer-events-none">{asciiText}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* About Section with Stickers and Journal */}
+      <div className="py-8 md:py-12" style={{
+        background: isDarkMode
+          ? 'transparent'
+          : `linear-gradient(180deg, transparent 0%, ${withAlpha(themeColors.colors.pink[50], 0.5)} 50%, ${themeColors.colors.pink[25]} 100%)`
+      }}>
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-center relative min-h-[400px] md:min-h-[600px]">
+            {/* Animated Stickers */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {stickers.map((sticker) => {
+                const isVerySmall = window.innerWidth < 375;
