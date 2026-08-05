@@ -307,3 +307,240 @@ const About = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               {stickers.map((sticker) => {
                 const isVerySmall = window.innerWidth < 375;
+                const isMobile = window.innerWidth < 768;
+                return (
+                  <img
+                    key={sticker.id}
+                    src={sticker.image}
+                    alt=""
+                    className="absolute z-10 pointer-events-none select-none"
+                    style={getStickerStyle(sticker)}
+                    loading={sticker.id <= 4 ? "eager" : "lazy"}
+                    decoding="async"
+                    width={isVerySmall ? "50" : isMobile ? "60" : "80"}
+                    height={isVerySmall ? "50" : isMobile ? "60" : "80"}
+                  />
+                );
+              })}
+            </div>
+
+            {/* About Me Journal Image with Handwriting Overlay */}
+            <div className="w-full md:max-w-2xl lg:max-w-4xl relative z-20 px-1 md:px-0">
+              <div className="relative w-full h-auto">
+                <picture>
+                  <source
+                    srcSet={`${aboutMeJournalWebp400} 400w, ${aboutMeJournalWebp800} 800w`}
+                    sizes="(max-width: 375px) 320px, (max-width: 480px) 400px, (max-width: 768px) 450px, 800px"
+                    type="image/webp"
+                  />
+                  {/* fallback for browsers that dont support webp */}
+                  <img
+                    src={aboutMeJournalWebp400}
+                    alt="Journal page with handwritten personal introduction and interests"
+                    className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => setShowProfileModal(true)}
+                    width="400"
+                    height="300"
+                    fetchPriority="high"
+                    loading="eager"
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
+                </picture>
+
+                {/* Handwriting Overlay Text */}
+                <div 
+                  className="absolute inset-0 pointer-events-none grid grid-cols-2 text-[7px] sm:text-[9px] md:text-sm lg:text-lg select-none"
+                  style={{
+                    fontFamily: "'DK Crayonista', cursive",
+                    color: '#42282f', // Dark brown/burgundy crayon color
+                    lineHeight: '1.3',
+                  }}
+                >
+                  {/* Left Page - About & Education */}
+                  <div className="flex flex-col justify-start overflow-hidden px-[9%] pt-[12%] pb-[5%] rotate-[-1deg]">
+                    <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>About Me</h3>
+                    <p className="mb-[6%] indent-[1.2em]">
+                      Hi! I'm Vikalp, an IT student at GEC Bilaspur. I love building web apps, hacking on x86 OS kernels, and teaching DSA.
+                    </p>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Education</h4>
+                    <p className="font-semibold text-[0.95em]">GEC Bilaspur</p>
+                    <p className="text-[0.85em] italic">B.Tech in Information Technology</p>
+                    <p className="text-[0.85em] mb-[4%]">Aug. 2024 – May 2028</p>
+                  </div>
+
+                  {/* Right Page - Coursework & Contact */}
+                  <div className="flex flex-col justify-start overflow-hidden px-[9%] pt-[12%] pb-[5%] rotate-[1deg]">
+                    <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>Interests</h3>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Relevant Coursework</h4>
+                    <ul className="list-none space-y-[2%] text-[0.9em] mb-[6%]">
+                      <li>• Data Structures & Algorithms</li>
+                      <li>• Operating Systems & x86 Assembly</li>
+                      <li>• DBMS & Database Architecture</li>
+                      <li>• OOPs & Software Design</li>
+                    </ul>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Contact Info</h4>
+                    <p className="text-[0.85em] mb-[1%]">📧 vikalpbordekar@gmail.com</p>
+                    <p className="text-[0.85em] mb-[4%]">📞 +91 7770945139</p>
+                    <p 
+                      className="text-[0.8em] text-center italic text-pink-600 font-semibold animate-pulse pointer-events-auto cursor-pointer mt-auto" 
+                      onClick={() => setShowProfileModal(true)}
+                    >
+                      (Click book to see photos!)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 ${isClosing ? 'animate-fadeOut' : 'animate-fadeIn'}`}
+          style={{ backgroundColor: themeColors.background.overlay }}
+          onClick={() => {
+            setIsClosing(true);
+            setTimeout(() => {
+              setShowProfileModal(false);
+              setIsClosing(false);
+            }, 300);
+          }}
+          onKeyDown={handleKeyDown}
+          tabIndex={-1}
+        >
+          <div className={`relative w-full max-w-sm md:max-w-md ${isClosing ? 'animate-scaleOut' : 'animate-scaleIn'}`} onClick={(e) => e.stopPropagation()}>
+            {/* Carousel Container */}
+            <div
+              className="relative w-full bg-black rounded-lg shadow-2xl overflow-hidden focus:outline-none"
+              style={{
+                aspectRatio: '4/5',
+                minHeight: '300px',
+                maxHeight: '80vh'
+              }}
+              role="region"
+              aria-label="Profile photo carousel"
+              aria-live="polite"
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
+            >
+              {/* Image Display */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                {profileImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image.src}
+                    alt={`Profile photo ${index + 1}`}
+                    className={`absolute w-full h-full object-contain transition-opacity duration-500 ${
+                      index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    loading="eager"
+                    onError={(e) => {
+                      console.error('Image failed to load:', image.src);
+                      e.currentTarget.style.display = 'block';
+                      e.currentTarget.style.backgroundColor = '#f3f4f6';
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={goToPrevious}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                style={{
+                  backgroundColor: isDarkMode ? withAlpha(themeColors.colors.dark[700], 0.9) : withAlpha(themeColors.colors.white, 0.8),
+                  color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[700],
+                  border: isDarkMode ? '2px solid #374151' : 'none',
+                  boxShadow: isDarkMode ? `0 4px 12px ${withAlpha(themeColors.colors.black, 0.6)}` : undefined
+                } as React.CSSProperties}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+
+              <button
+                onClick={goToNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                style={{
+                  backgroundColor: isDarkMode ? withAlpha(themeColors.colors.dark[700], 0.9) : withAlpha(themeColors.colors.white, 0.8),
+                  color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[700],
+                  border: isDarkMode ? '2px solid #374151' : 'none',
+                  boxShadow: isDarkMode ? `0 4px 12px ${withAlpha(themeColors.colors.black, 0.6)}` : undefined
+                } as React.CSSProperties}
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+
+              {/* Image Counter */}
+              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                {currentImageIndex + 1} / {profileImages.length}
+              </div>
+
+              {/* Caption */}
+              <div className="absolute bottom-4 right-4 bg-black/70 text-white px-4 py-2 rounded-lg text-base font-medium max-w-[220px] text-center">
+                {profileImages[currentImageIndex].caption}
+              </div>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-0 mt-4">
+              {profileImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className="transition-all focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2 flex items-center justify-center"
+                  style={{
+                    minWidth: '44px',
+                    minHeight: '44px',
+                    padding: '0',
+                    backgroundColor: 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  } as React.CSSProperties}
+                  aria-label={`Go to image ${index + 1}`}
+                >
+                  <span
+                    className="rounded-full transition-all"
+                    style={{
+                      width: index === currentImageIndex ? '32px' : '12px',
+                      height: '12px',
+                      backgroundColor: index === currentImageIndex ? themeColors.colors.pink[300] : (isDarkMode ? withAlpha(themeColors.colors.pink[300], 0.3) : themeColors.colors.dark[300])
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Close Button */}
+            <button
+              className="absolute top-4 right-4 text-white rounded-full w-11 h-11 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:rotate-90"
+              style={{ 
+                backgroundColor: themeColors.colors.pink[500],
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = themeColors.colors.pink[600]}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = themeColors.colors.pink[500]}
+              aria-label="Close modal"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsClosing(true);
+                setTimeout(() => {
+                  setShowProfileModal(false);
+                  setIsClosing(false);
+                }, 300);
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default About;
