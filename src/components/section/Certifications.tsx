@@ -101,3 +101,43 @@ const Certifications = () => {
                     </div>
                     <div>
                       <CardTitle className="text-xl dark:text-gray-100 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors">
+                        {ach.title}
+                      </CardTitle>
+                      <div className="flex flex-wrap items-center gap-2 mt-2">
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-pink-50 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 border border-pink-100 dark:border-pink-800/50">
+                          {ach.role}
+                        </span>
+                        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                          {ach.result}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-2 flex-grow">
+                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {ach.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Bottom gradient overlay for smooth transition */}
+      <div
+        className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: '60px',
+          background: isDarkMode
+            ? `linear-gradient(180deg, transparent 0%, ${themeColors.background.gradientEnd} 100%)`
+            : `linear-gradient(180deg, transparent 0%, ${themeColors.colors.pink[25]} 100%)`,
+          zIndex: 1
+        }}
+      />
+    </section>
+  );
+};
+
+export default Certifications;
