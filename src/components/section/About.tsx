@@ -465,4 +465,81 @@ const About = () => {
                 style={{
                   backgroundColor: isDarkMode ? withAlpha(themeColors.colors.dark[700], 0.9) : withAlpha(themeColors.colors.white, 0.8),
                   color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[700],
-                  border: isDarkMode ? '2px solid #374151' : 'none',
+                  border: isDarkMode ? '2px solid #374151' : 'none',
+                  boxShadow: isDarkMode ? `0 4px 12px ${withAlpha(themeColors.colors.black, 0.6)}` : undefined
+                } as React.CSSProperties}
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+
+              {/* Image Counter */}
+              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                {currentImageIndex + 1} / {profileImages.length}
+              </div>
+
+              {/* Caption */}
+              <div className="absolute bottom-4 right-4 bg-black/70 text-white px-4 py-2 rounded-lg text-base font-medium max-w-[220px] text-center">
+                {profileImages[currentImageIndex].caption}
+              </div>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-0 mt-4">
+              {profileImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className="transition-all focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2 flex items-center justify-center"
+                  style={{
+                    minWidth: '44px',
+                    minHeight: '44px',
+                    padding: '0',
+                    backgroundColor: 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  } as React.CSSProperties}
+                  aria-label={`Go to image ${index + 1}`}
+                >
+                  <span
+                    className="rounded-full transition-all"
+                    style={{
+                      width: index === currentImageIndex ? '32px' : '12px',
+                      height: '12px',
+                      backgroundColor: index === currentImageIndex ? themeColors.colors.pink[300] : (isDarkMode ? withAlpha(themeColors.colors.pink[300], 0.3) : themeColors.colors.dark[300])
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Close Button */}
+            <button
+              className="absolute top-4 right-4 text-white rounded-full w-11 h-11 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:rotate-90"
+              style={{ 
+                backgroundColor: themeColors.colors.pink[500],
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = themeColors.colors.pink[600]}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = themeColors.colors.pink[500]}
+              aria-label="Close modal"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsClosing(true);
+                setTimeout(() => {
+                  setShowProfileModal(false);
+                  setIsClosing(false);
+                }, 300);
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default About;
