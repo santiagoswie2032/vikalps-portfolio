@@ -183,4 +183,97 @@ const Projects = () => {
         const clampedY = Math.max(0, Math.min(95, y));
 
         setStars(prevStars =>
-          prevStars.map(s =>
+          prevStars.map(s =>
+            s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s
+          )
+        );
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (draggedStar !== null) {
+        setStars(prevStars =>
+          prevStars.map(s => s.id === draggedStar ? { ...s, isDragging: false } : s)
+        );
+        setDraggedStar(null);
+        isDraggingRef.current = false;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (draggedStar !== null) {
+        setStars(prevStars =>
+          prevStars.map(s => s.id === draggedStar ? { ...s, isDragging: false } : s)
+        );
+        setDraggedStar(null);
+        isDraggingRef.current = false;
+      }
+    };
+
+    if (draggedStar !== null) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [draggedStar]);
+
+  // project data - these are the main cards
+  const projects = [
+    {
+      title: "Spylt Clone - AWWWWARDS Website Clone",
+      description: "Developed a responsive clone of the AWWWWARDS-featured Spylt website from scratch, with GSAP scroll animations and interactive frontend elements optimized for mobile and tablet devices.",
+      technologies: ["React.js", "Tailwind CSS", "GSAP"],
+      icon: comingSoon,
+      liveUrl: "https://spylt-clone-rose.vercel.app/"
+    },
+    {
+      title: "Chat-It - Real-Time Chat App",
+      description: "Built a full-stack real-time chat platform with dedicated rooms, instant messaging, a Node.js and Express backend, and Socket.io WebSockets for low-latency communication.",
+      technologies: ["React", "Node.js", "Express", "Socket.io"],
+      icon: comingSoon,
+      liveUrl: "https://chat-it-qm2l.onrender.com/"
+    },
+    {
+      title: "Interactive Personal Portfolio",
+      description: "Engineered this Spider-Man-themed portfolio to showcase web projects and UI/UX skills, using TypeScript, smooth animations, and a fully functional dark/light mode.",
+      technologies: ["React", "TypeScript", "Tailwind CSS"],
+      icon: comingSoon,
+      liveUrl: "https://vikalps-portfolio.vikalpbordekar.workers.dev/",
+      githubUrl: socialLinks.repositories.portfolio
+    }
+  ];
+
+  // Calculate carousel pagination
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const startIndex = currentPage * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const currentProjects = projects.slice(startIndex, endIndex);
+
+  // Create placeholder cards for "Coming Soon" projects
+  const placeholderCount = projectsPerPage - currentProjects.length;
+  const placeholders = Array.from({ length: placeholderCount }, (_, i) => ({
+    id: `placeholder-${i}`,
+    isPlaceholder: true
+  }));
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setDirection('left');
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setDirection('right');
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
