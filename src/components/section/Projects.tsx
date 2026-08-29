@@ -555,4 +555,94 @@ const Projects = () => {
           {/* Carousel navigation - subtle dots at bottom */}
           <div className="flex items-center justify-center gap-3 mt-4 relative z-10" style={{ minHeight: '32px' }}>
             <button
-              onClick={handlePrevPage}
+              onClick={handlePrevPage}
+              disabled={currentPage === 0}
+              className="transition-all duration-200 hover:scale-110"
+              style={{
+                color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400],
+                opacity: currentPage === 0 ? 0.2 : 0.6,
+                cursor: currentPage === 0 ? 'not-allowed' : 'pointer',
+                background: 'none',
+                border: 'none',
+                padding: '4px',
+                minWidth: '28px',
+                minHeight: '28px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              aria-label="Previous projects"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            {/* Page dots */}
+            <div className="flex gap-2">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    if (i !== currentPage) {
+                      setDirection(i > currentPage ? 'right' : 'left');
+                      setCurrentPage(i);
+                    }
+                  }}
+                  className="transition-all duration-200"
+                  style={{
+                    width: currentPage === i ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: '4px',
+                    backgroundColor: currentPage === i
+                      ? (isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400])
+                      : (isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400]),
+                    opacity: currentPage === i ? 1 : 0.3,
+                    cursor: 'pointer',
+                    border: 'none',
+                    padding: 0
+                  }}
+                  aria-label={`Go to page ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages - 1}
+              className="transition-all duration-200 hover:scale-110"
+              style={{
+                color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400],
+                opacity: currentPage === totalPages - 1 ? 0.2 : 0.6,
+                cursor: currentPage === totalPages - 1 ? 'not-allowed' : 'pointer',
+                background: 'none',
+                border: 'none',
+                padding: '4px',
+                minWidth: '28px',
+                minHeight: '28px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              aria-label="Next projects"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </TooltipProvider>
+      
+      {/* Gradient overlay for smooth transition to next section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: '150px',
+          background: isDarkMode
+            ? `linear-gradient(180deg, transparent 0%, ${themeColors.background.gradientEnd} 100%)`
+            : `linear-gradient(180deg, transparent 0%, ${themeColors.colors.pink[25]} 100%)`,
+          zIndex: 1
+        }}
+      />
+    </section>
+  );
+};
+
+export default Projects;
