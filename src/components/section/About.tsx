@@ -387,4 +387,82 @@ const About = () => {
                       (Click book to see photos!)
                     </p>
                   </div>
-                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 ${isClosing ? 'animate-fadeOut' : 'animate-fadeIn'}`}
+          style={{ backgroundColor: themeColors.background.overlay }}
+          onClick={() => {
+            setIsClosing(true);
+            setTimeout(() => {
+              setShowProfileModal(false);
+              setIsClosing(false);
+            }, 300);
+          }}
+          onKeyDown={handleKeyDown}
+          tabIndex={-1}
+        >
+          <div className={`relative w-full max-w-sm md:max-w-md ${isClosing ? 'animate-scaleOut' : 'animate-scaleIn'}`} onClick={(e) => e.stopPropagation()}>
+            {/* Carousel Container */}
+            <div
+              className="relative w-full bg-black rounded-lg shadow-2xl overflow-hidden focus:outline-none"
+              style={{
+                aspectRatio: '4/5',
+                minHeight: '300px',
+                maxHeight: '80vh'
+              }}
+              role="region"
+              aria-label="Profile photo carousel"
+              aria-live="polite"
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
+            >
+              {/* Image Display */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                {profileImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image.src}
+                    alt={`Profile photo ${index + 1}`}
+                    className={`absolute w-full h-full object-contain transition-opacity duration-500 ${
+                      index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    loading="eager"
+                    onError={(e) => {
+                      console.error('Image failed to load:', image.src);
+                      e.currentTarget.style.display = 'block';
+                      e.currentTarget.style.backgroundColor = '#f3f4f6';
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={goToPrevious}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                style={{
+                  backgroundColor: isDarkMode ? withAlpha(themeColors.colors.dark[700], 0.9) : withAlpha(themeColors.colors.white, 0.8),
+                  color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[700],
+                  border: isDarkMode ? '2px solid #374151' : 'none',
+                  boxShadow: isDarkMode ? `0 4px 12px ${withAlpha(themeColors.colors.black, 0.6)}` : undefined
+                } as React.CSSProperties}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+
+              <button
+                onClick={goToNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                style={{
+                  backgroundColor: isDarkMode ? withAlpha(themeColors.colors.dark[700], 0.9) : withAlpha(themeColors.colors.white, 0.8),
+                  color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[700],
+                  border: isDarkMode ? '2px solid #374151' : 'none',
