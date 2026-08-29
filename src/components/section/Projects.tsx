@@ -462,4 +462,97 @@ const Projects = () => {
                       <CardTitle className="text-xl dark:text-gray-100 transition-colors group-hover:!text-pink-500 dark:group-hover:!text-pink-400">
                         {project.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
+                      <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
+                        {project.description}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div className="flex flex-wrap gap-2 mb-4" style={{ flex: '1 0 auto' }}>
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge key={techIndex} variant="secondary" className="text-xs"
+                        style={{
+                          backgroundColor: themeColors.interactive.primary,
+                          color: themeColors.text.accent,
+                          borderColor: themeColors.primary,
+                          border: '1px solid'
+                        }}>
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex gap-3" style={{ marginTop: 'auto', paddingTop: '8px' }}>
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="project-btn flex items-center gap-1" style={{ textDecoration: 'none', color: 'white' }} aria-label={`Open ${project.title} live demo`}>
+                      <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                      Live Demo
+                    </a>
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} className="project-btn-outline flex items-center gap-1" style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code on GitHub`}>
+                        <Code className="h-4 w-4" aria-hidden="true" />
+                        Code
+                      </a>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+
+            {/* Placeholder "Coming Soon" cards */}
+            {placeholders.map((placeholder) => (
+              <Card key={placeholder.id} className="group relative" style={{
+                backgroundColor: themeColors.card.background,
+                border: `1px dashed ${themeColors.card.border}`,
+                opacity: 0.5
+              }} aria-label="Coming soon project">
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={comingSoon}
+                      alt="Coming soon"
+                      className="w-12 h-12 rounded-lg object-cover opacity-60"
+                      loading="lazy"
+                      width="48"
+                      height="48"
+                    />
+                    <div className="flex-1">
+                      <CardTitle className="text-xl" style={{ color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[600] }}>
+                        Coming Soon
+                      </CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
+                        More exciting projects on the way! Check back soon to see what I'm working on next.
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div className="flex flex-wrap gap-2 mb-4" style={{ flex: '1 0 auto' }}>
+                    <Badge variant="secondary" className="text-xs" style={{
+                      backgroundColor: themeColors.interactive.primary,
+                      color: themeColors.text.accent,
+                      borderColor: themeColors.primary,
+                      border: '1px solid',
+                      opacity: 0.5
+                    }}>
+                      TBA
+                    </Badge>
+                  </div>
+                  <div className="flex gap-3 opacity-30" style={{ marginTop: 'auto', paddingTop: '8px' }}>
+                    <div className="project-btn flex items-center gap-1" style={{ pointerEvents: 'none' }}>
+                      <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                      Details
+                    </div>
+                    <div className="project-btn-outline flex items-center gap-1" style={{ pointerEvents: 'none' }}>
+                      <Code className="h-4 w-4" aria-hidden="true" />
+                      Code
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Carousel navigation - subtle dots at bottom */}
+          <div className="flex items-center justify-center gap-3 mt-4 relative z-10" style={{ minHeight: '32px' }}>
+            <button
+              onClick={handlePrevPage}
