@@ -309,4 +309,82 @@ const About = () => {
                 const isMobile = window.innerWidth < 768;
                 return (
                   <img
-                    key={sticker.id}
+                    key={sticker.id}
+                    src={sticker.image}
+                    alt=""
+                    className="absolute z-10 pointer-events-none select-none"
+                    style={getStickerStyle(sticker)}
+                    loading={sticker.id <= 4 ? "eager" : "lazy"}
+                    decoding="async"
+                    width={isVerySmall ? "50" : isMobile ? "60" : "80"}
+                    height={isVerySmall ? "50" : isMobile ? "60" : "80"}
+                  />
+                );
+              })}
+            </div>
+
+            {/* About Me Journal Image with Handwriting Overlay */}
+            <div className="w-full md:max-w-2xl lg:max-w-4xl relative z-20 px-1 md:px-0">
+              <div className="relative w-full h-auto">
+                <picture>
+                  <source
+                    srcSet={`${aboutMeJournalWebp400} 400w, ${aboutMeJournalWebp800} 800w`}
+                    sizes="(max-width: 375px) 320px, (max-width: 480px) 400px, (max-width: 768px) 450px, 800px"
+                    type="image/webp"
+                  />
+                  {/* fallback for browsers that dont support webp */}
+                  <img
+                    src={aboutMeJournalWebp400}
+                    alt="Journal page with handwritten personal introduction and interests"
+                    className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => setShowProfileModal(true)}
+                    width="400"
+                    height="300"
+                    fetchPriority="high"
+                    loading="eager"
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
+                </picture>
+
+                {/* Handwriting Overlay Text */}
+                <div 
+                  className="absolute inset-0 pointer-events-none grid grid-cols-2 text-[7px] sm:text-[9px] md:text-sm lg:text-lg select-none"
+                  style={{
+                    fontFamily: "'DK Crayonista', cursive",
+                    color: '#42282f', // Dark brown/burgundy crayon color
+                    lineHeight: '1.3',
+                  }}
+                >
+                  {/* Left Page - About & Education */}
+                  <div className="flex flex-col justify-start overflow-hidden px-[9%] pt-[12%] pb-[5%] rotate-[-1deg]">
+                    <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>About Me</h3>
+                    <p className="mb-[6%] indent-[1.2em]">
+                      Passionate frontend developer building dynamic, responsive interfaces with React.js and Tailwind CSS. I am expanding into backend and full-stack development with Node.js and Next.js, backed by a strong foundation in DSA and scalable web applications.
+                    </p>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Education</h4>
+                    <p className="font-semibold text-[0.95em]">GEC Bilaspur</p>
+                    <p className="text-[0.85em] italic">B.Tech in Information Technology</p>
+                    <p className="text-[0.85em] mb-[4%]">Aug. 2024 – May 2028</p>
+                  </div>
+
+                  {/* Right Page - Skills & Contact */}
+                  <div className="flex flex-col justify-start overflow-hidden px-[9%] pt-[12%] pb-[5%] rotate-[1deg]">
+                    <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>Skills</h3>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Core Toolkit</h4>
+                    <ul className="list-none space-y-[2%] text-[0.9em] mb-[6%]">
+                      <li>• React.js, Next.js & Tailwind CSS</li>
+                      <li>• Node.js & Express.js</li>
+                      <li>• TypeScript, JavaScript & C++</li>
+                      <li>• PostgreSQL, Prisma & Docker</li>
+                    </ul>
+                    <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Contact Info</h4>
+                    <a className="text-[0.85em] mb-[1%] pointer-events-auto hover:underline" href={`mailto:${socialLinks.email}`}>📧 {socialLinks.display.email}</a>
+                    <a className="text-[0.85em] mb-[4%] pointer-events-auto hover:underline" href={`tel:${socialLinks.phone}`}>📞 +91 7770945139</a>
+                    <p 
+                      className="text-[0.8em] text-center italic text-pink-600 font-semibold animate-pulse pointer-events-auto cursor-pointer mt-auto" 
+                      onClick={() => setShowProfileModal(true)}
+                    >
+                      (Click book to see photos!)
+                    </p>
+                  </div>
+                </div>
