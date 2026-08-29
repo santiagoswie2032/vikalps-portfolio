@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Github, Linkedin } from 'lucide-react';
+import { Mail, Github, Linkedin, Phone, Code2 } from 'lucide-react';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { useThemeColors } from '../hooks/useThemeColors';
 import Aurora from '../components/ui/aurora';
@@ -40,6 +40,7 @@ const Contact = () => {
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4" style={{ color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[600] }}>Let's Connect!</h1>
           <p className="text-lg" style={{ color: themeColors.text.secondary }}>
+            I am always open to discussing frontend and full-stack opportunities, projects, and collaboration.
           </p>
         </header>
 
@@ -108,6 +109,42 @@ const Contact = () => {
               Connect
             </a>
             <p className="text-xs mt-3" style={{ color: themeColors.text.tertiary }}>{socialLinks.display.linkedin}</p>
+          </article>
+
+          {/* Phone Card */}
+          <article className="rounded-lg shadow-lg p-6 text-center hover:scale-105 transition-transform duration-300" style={{ backgroundColor: themeColors.card.background }} aria-labelledby="phone-heading">
+            <div className="flex justify-center mb-4">
+              <Phone className="h-12 w-12" style={{ color: themeColors.colors.pink[500] }} aria-hidden="true" />
+            </div>
+            <h3 id="phone-heading" className="text-xl font-semibold mb-2" style={{ color: themeColors.text.primary }}>Phone</h3>
+            <a
+              href={`tel:${socialLinks.phone}`}
+              aria-label={`Call ${socialLinks.display.phone}`}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-80"
+              style={{ backgroundColor: themeColors.interactive.primary, color: themeColors.text.pink }}
+            >
+              Call Me
+            </a>
+            <p className="text-xs mt-3" style={{ color: themeColors.text.tertiary }}>+91 7770945139</p>
+          </article>
+
+          {/* LeetCode Card */}
+          <article className="rounded-lg shadow-lg p-6 text-center hover:scale-105 transition-transform duration-300" style={{ backgroundColor: themeColors.card.background }} aria-labelledby="leetcode-heading">
+            <div className="flex justify-center mb-4">
+              <Code2 className="h-12 w-12" style={{ color: themeColors.colors.pink[500] }} aria-hidden="true" />
+            </div>
+            <h3 id="leetcode-heading" className="text-xl font-semibold mb-2" style={{ color: themeColors.text.primary }}>LeetCode</h3>
+            <a
+              href={socialLinks.leetcode}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View LeetCode profile at ${socialLinks.display.leetcode} (opens in new tab)`}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-80"
+              style={{ backgroundColor: themeColors.interactive.primary, color: themeColors.text.pink }}
+            >
+              View Profile
+            </a>
+            <p className="text-xs mt-3" style={{ color: themeColors.text.tertiary }}>{socialLinks.display.leetcode}</p>
           </article>
 
         </section>
