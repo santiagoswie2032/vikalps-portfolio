@@ -276,4 +276,97 @@ const Projects = () => {
       setDirection('right');
       setCurrentPage((prev) => prev + 1);
     }
-  };
+  };
+
+  return (
+    <section
+      id="projects"
+      className="py-20 relative transition-colors duration-300"
+      style={{
+        background: themeColors.background.sections?.projects || themeColors.background.gradient,
+        transition: 'background 0.3s ease-in-out'
+      }}
+      ref={containerRef}
+    >
+      {/* Gradient overlay for smooth transition from previous section */}
+      <div
+        className="absolute top-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: '150px',
+          background: isDarkMode
+            ? `linear-gradient(180deg, ${themeColors.background.gradientEnd} 0%, transparent 100%)`
+            : `linear-gradient(180deg, ${themeColors.colors.pink[25]} 0%, transparent 100%)`,
+          zIndex: 2
+        }}
+      />
+      {/* Special Drag Me Star - Interactive with Click Me arrow */}
+      <div
+        className="special-draggable-star"
+        onMouseDown={handleSpecialStarMouseDown}
+        onTouchStart={handleSpecialStarTouchStart}
+        style={{
+          position: 'absolute',
+          left: `${specialStar.x}%`,
+          top: `${specialStar.y}%`,
+          width: '44px',
+          height: '44px',
+          zIndex: 15,
+          cursor: isDraggingSpecial ? 'grabbing' : 'grab',
+          userSelect: 'none',
+          animation: 'twinkle 3s infinite'
+        }}
+      >
+        <img
+          src={isDarkMode ? specialStars.dragMeStarDark : specialStars.dragMeStar}
+          alt="Drag me star"
+          style={{
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none'
+          }}
+          draggable={false}
+          loading="lazy"
+          width="44"
+          height="44"
+        />
+      </div>
+
+      {/* Static "drag me!" text with arrow */}
+      <div
+        style={{
+          position: 'absolute',
+          left: '85%',
+          top: '5%',
+          zIndex: 16,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          pointerEvents: 'none'
+        }}
+      >
+        <img
+          src={isDarkMode ? specialStars.arrowDark : specialStars.arrow}
+          alt="Arrow"
+          style={{
+            width: '45px',
+            height: '45px',
+            marginLeft: '40px'
+          }}
+          draggable={false}
+          loading="lazy"
+        />
+        <span
+          style={{
+            fontFamily: "'DK Crayonista', cursive",
+            fontSize: '26px',
+            color: isDarkMode ? '#FDD5DF' : '#ec4899',
+            fontWeight: 'bold',
+            userSelect: 'none',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+          }}
+        >
+          drag me!
+        </span>
+      </div>
+
+      {/* all the regular draggable stars scattered around */}
