@@ -369,4 +369,97 @@ const Projects = () => {
         </span>
       </div>
 
-      {/* all the regular draggable stars scattered around */}
+      {/* all the regular draggable stars scattered around */}
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="draggable-star"
+          onMouseDown={handleStarMouseDown(star.id)}
+          onTouchStart={handleStarTouchStart(star.id)}
+          style={{
+            position: 'absolute',
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: '50px',
+            height: '50px',
+            zIndex: 1,
+            cursor: star.isDragging ? 'grabbing' : 'grab',
+            userSelect: 'none'
+          }}
+        >
+          <img
+            src={star.image}
+            alt="Star"
+            style={{
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none'
+            }}
+            draggable={false}
+            loading="lazy"
+            width="50"
+            height="50"
+          />
+        </div>
+      ))}
+
+      {/* main content container with the project cards */}
+      <TooltipProvider delayDuration={200}>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="flex items-center justify-center gap-1 mb-4">
+            <h2 className="text-4xl font-bold" style={{ color: isDarkMode ? themeColors.colors.white : themeColors.colors.pink[500] }}>Projects</h2>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button 
+                  className="inline-flex items-center justify-center bg-transparent border-none outline-none focus:outline-none" 
+                  style={{ minWidth: '44px', minHeight: '44px' }}
+                  aria-label="Information about project icons"
+                >
+                  <Bug
+                    className="h-5 w-5 cursor-pointer transition-colors"
+                    style={{ color: themeColors.primary }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = themeColors.secondary}
+                    onMouseLeave={(e) => e.currentTarget.style.color = themeColors.primary}
+                    fill="none"
+                  />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="bg-white text-gray-800 border-pink-200">
+                <p>built with spider-sense 🕷️</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <p className="text-center mb-12 text-lg text-gray-600 dark:text-gray-300">
+            Here are some of the projects I've worked on recently
+          </p>
+
+          {/* grid layout for project cards */}
+          <div
+            key={currentPage}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-8"
+            style={{
+              animation: `slideIn${direction === 'right' ? 'Right' : 'Left'} 0.4s ease-out`
+            }}
+          >
+            {currentProjects.map((project, index) => (
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative" style={{
+                backgroundColor: themeColors.card.background,
+                border: `1px solid ${themeColors.card.border}`
+              }} aria-label={`${project.title} project`}>
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    {project.icon && (
+                      <img
+                        src={project.icon}
+                        alt={`${project.title} icon`}
+                        className="w-12 h-12 rounded-lg object-cover"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <CardTitle className="text-xl dark:text-gray-100 transition-colors group-hover:!text-pink-500 dark:group-hover:!text-pink-400">
+                        {project.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
