@@ -75,4 +75,82 @@ const About = () => {
                       \\           /;  :$$$$$$$P'      
                     _  "-, ;       '.  T$$$$P'        
                    / "-.'  :    .--.___.\`^^'          
-                  /      . :  .'                      
+                  /      . :  .'                      
+                  ),sss.  \\  :  bug                   
+                 : TP""Tb. ; ;                        
+                 ;  Tb  dP   :                        
+                 :   TbdP    ;                        
+                  \\   $P    /                         
+                   \`.___.-'`;
+
+  // Typewriter effect for ASCII art
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingSpeed = 3; // Speed in milliseconds
+
+    const typeWriter = () => {
+      if (currentIndex < fullAsciiArt.length) {
+        setAsciiText(fullAsciiArt.substring(0, currentIndex + 15));
+        currentIndex += 15;
+        setTimeout(typeWriter, typingSpeed);
+      }
+    };
+
+    // Start typing after a small delay
+    const startDelay = setTimeout(() => {
+      typeWriter();
+    }, 500);
+
+    return () => clearTimeout(startDelay);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (!sectionRef.current) {
+            ticking = false;
+            return;
+          }
+
+          const rect = sectionRef.current.getBoundingClientRect();
+          const sectionHeight = rect.height;
+          const windowHeight = window.innerHeight;
+
+          // Calculate how much of the section is in view
+          const visibleTop = Math.max(0, -rect.top);
+          const visibleBottom = Math.min(sectionHeight, windowHeight - rect.top);
+          const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+          const progress = visibleHeight / windowHeight;
+          setScrollProgress(Math.min(1, Math.max(0, progress)));
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Focus management for modal
+  useEffect(() => {
+    if (showProfileModal) {
+      // Focus the modal when it opens
+      const timer = setTimeout(() => {
+        const modal = document.querySelector('[role="region"][aria-label="Profile photo carousel"]') as HTMLElement;
+        if (modal) {
+          modal.focus();
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [showProfileModal]);
+
+  // Carousel navigation functions
