@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -7,7 +7,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/
 import { ExternalLink, Code, Bug, ChevronLeft, ChevronRight } from 'lucide-react';
 import { socialLinks } from '../../config/socialLinks';
 import { lightStars, darkStars, specialStars } from '../../assets/stars';
-import { comingSoon } from '../../assets';
+import { comingSoon, fizziIcon, spyltIcon, gdgPeerIcon, portfolioIcon } from '../../assets';
+
 
 const Projects = () => {
   const { isDarkMode } = useDarkMode();
@@ -228,24 +229,33 @@ const Projects = () => {
   // project data - these are the main cards
   const projects = [
     {
+      title: "Fizzi - 3D Product Showcase",
+      description: "High-performance 3D beverage landing page built with Three.js, Next.js, GSAP scroll animations, Prismic CMS, and Tailwind CSS.",
+      technologies: ["Next.js", "Three.js", "GSAP", "Prismic CMS", "Tailwind CSS"],
+      icon: fizziIcon,
+      liveUrl: "https://fizzi-clone-ten.vercel.app/",
+      githubUrl: "https://github.com/santiagoswie2032/Fizzi2"
+    },
+    {
       title: "Spylt Clone - AWWWWARDS Website Clone",
       description: "Developed a responsive clone of the AWWWWARDS-featured Spylt website from scratch, with GSAP scroll animations and interactive frontend elements optimized for mobile and tablet devices.",
       technologies: ["React.js", "Tailwind CSS", "GSAP"],
-      icon: comingSoon,
+      icon: spyltIcon,
       liveUrl: "https://spylt-clone-rose.vercel.app/"
     },
     {
-      title: "Chat-It - Real-Time Chat App",
-      description: "Built a full-stack real-time chat platform with dedicated rooms, instant messaging, a Node.js and Express backend, and Socket.io WebSockets for low-latency communication.",
-      technologies: ["React", "Node.js", "Express", "Socket.io"],
-      icon: comingSoon,
-      liveUrl: "https://chat-it-qm2l.onrender.com/"
+      title: "GDG Peer - Peer Learning Platform",
+      description: "Built a collaborative peer-learning platform empowering developers to connect, exchange technical skills, tackle real challenges, and build momentum together.",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"],
+      icon: gdgPeerIcon,
+      liveUrl: "https://gdg-peer-learning-1.onrender.com/",
+      githubUrl: "https://github.com/Yashwantsahu9907/GDG-Peer-Learning"
     },
     {
       title: "Interactive Personal Portfolio",
       description: "Engineered this Spider-Man-themed portfolio to showcase web projects and UI/UX skills, using TypeScript, smooth animations, and a fully functional dark/light mode.",
       technologies: ["React", "TypeScript", "Tailwind CSS"],
-      icon: comingSoon,
+      icon: portfolioIcon,
       liveUrl: "https://vikalps-portfolio.vikalpbordekar.workers.dev/",
       githubUrl: socialLinks.repositories.portfolio
     }
@@ -442,33 +452,31 @@ const Projects = () => {
             }}
           >
             {currentProjects.map((project, index) => (
-              <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative" style={{
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden flex flex-col" style={{
                 backgroundColor: themeColors.card.background,
                 border: `1px solid ${themeColors.card.border}`
               }} aria-label={`${project.title} project`}>
+                {project.icon && (
+                  <div className="relative w-full h-48 overflow-hidden border-b" style={{ borderColor: themeColors.card.border }}>
+                    <img
+                      src={project.icon}
+                      alt={`${project.title} preview`}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
                 <CardHeader>
-                  <div className="flex items-start gap-3">
-                    {project.icon && (
-                      <img
-                        src={project.icon}
-                        alt={`${project.title} icon`}
-                        className="w-12 h-12 rounded-lg object-cover"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                      />
-                    )}
-                    <div className="flex-1">
-                      <CardTitle className="text-xl dark:text-gray-100 transition-colors group-hover:!text-pink-500 dark:group-hover:!text-pink-400">
-                        {project.title}
-                      </CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
-                        {project.description}
-                      </CardDescription>
-                    </div>
+                  <div>
+                    <CardTitle className="text-xl dark:text-gray-100 transition-colors group-hover:!text-pink-500 dark:group-hover:!text-pink-400">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
+                      {project.description}
+                    </CardDescription>
                   </div>
                 </CardHeader>
-                <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
+                <CardContent style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                   <div className="flex flex-wrap gap-2 mb-4" style={{ flex: '1 0 auto' }}>
                     {project.technologies.map((tech, techIndex) => (
                       <Badge key={techIndex} variant="secondary" className="text-xs"

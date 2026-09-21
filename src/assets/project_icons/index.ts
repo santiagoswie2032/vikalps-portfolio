@@ -1,9 +1,12 @@
-// Project icons module - add your project icon imports here
-// Example:
-// import MyProjectIcon from './MyProjectIcon.webp';
-//
-// export { MyProjectIcon };
-// export default { MyProjectIcon };
+import fizziIcon from './fizzi.png';
+import spyltIcon from './spylt.png';
+import gdgPeerIcon from './gdg_peer.png';
+import portfolioIcon from './portfolio.png';
 
-export {};
-export default {};
+export { fizziIcon, spyltIcon, gdgPeerIcon, portfolioIcon };
+export default {
+  fizziIcon,
+  spyltIcon,
+  gdgPeerIcon,
+  portfolioIcon,
+};
