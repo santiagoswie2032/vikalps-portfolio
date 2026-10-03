@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/
 import { ExternalLink, Code, Bug, ChevronLeft, ChevronRight } from 'lucide-react';
 import { socialLinks } from '../../config/socialLinks';
 import { lightStars, darkStars, specialStars } from '../../assets/stars';
-import { comingSoon, fizziIcon, spyltIcon, gdgPeerIcon, portfolioIcon } from '../../assets';
+import { comingSoon, fizziIcon, spyltIcon, gdgPeerIcon, portfolioIcon, sozoIcon } from '../../assets';
 
 
 const Projects = () => {
@@ -229,8 +229,16 @@ const Projects = () => {
   // project data - these are the main cards
   const projects = [
     {
-      title: "Fizzi - 3D Product Showcase",
-      description: "High-performance 3D beverage landing page built with Three.js, Next.js, GSAP scroll animations, Prismic CMS, and Tailwind CSS.",
+      title: "SozoAI - AI-Powered App Builder",
+      description: "Architected an AI-powered web application builder using React (Vite) and Node.js that transforms natural language prompts into fully functional React applications with CodeSandbox Sandpack previews, WebGL Three.js canvas shaders, and Express/MongoDB backend.",
+      technologies: ["React", "Node.js", "Three.js", "Sandpack", "Express.js", "MongoDB"],
+      icon: sozoIcon,
+      liveUrl: "https://sozoai.vercel.app/",
+      githubUrl: "https://github.com/santiagoswie2032/sozo-ai"
+    },
+    {
+      title: "Fizzi - 3D Animated Soda Brand Website",
+      description: "Engineered an immersive 3D product showcase using Next.js and Three.js (React Three Fiber), rendering interactive soda can models on HTML5 Canvas with scroll-driven animations powered by GSAP ScrollTrigger and Prismic CMS.",
       technologies: ["Next.js", "Three.js", "GSAP", "Prismic CMS", "Tailwind CSS"],
       icon: fizziIcon,
       liveUrl: "https://fizzi-clone-ten.vercel.app/",
@@ -238,10 +246,11 @@ const Projects = () => {
     },
     {
       title: "Spylt Clone - AWWWWARDS Website Clone",
-      description: "Developed a responsive clone of the AWWWWARDS-featured Spylt website from scratch, with GSAP scroll animations and interactive frontend elements optimized for mobile and tablet devices.",
+      description: "Developed a pixel-perfect clone of the AWWWWARDS-featured Spylt website, replicating complex scroll-bound animations and dynamic flavor-based color transitions using GSAP ScrollTrigger across 5 sections.",
       technologies: ["React.js", "Tailwind CSS", "GSAP"],
       icon: spyltIcon,
-      liveUrl: "https://spylt-clone-rose.vercel.app/"
+      liveUrl: "https://spylt-clone-rose.vercel.app/",
+      githubUrl: "https://github.com/santiagoswie2032/spylt-clone"
     },
     {
       title: "GDG Peer - Peer Learning Platform",
@@ -253,7 +262,7 @@ const Projects = () => {
     },
     {
       title: "Interactive Personal Portfolio",
-      description: "Engineered this Spider-Man-themed portfolio to showcase web projects and UI/UX skills, using TypeScript, smooth animations, and a fully functional dark/light mode.",
+      description: "Engineered this interactive developer portfolio to showcase web projects and UI/UX skills, using TypeScript, smooth animations, and a fully functional dark/light mode.",
       technologies: ["React", "TypeScript", "Tailwind CSS"],
       icon: portfolioIcon,
       liveUrl: "https://vikalps-portfolio.vikalpbordekar.workers.dev/",

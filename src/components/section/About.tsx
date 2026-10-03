@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import AsciiMorphText from '../AsciiMorphText';
@@ -358,12 +358,12 @@ const About = () => {
                   {/* Left Page - About & Education */}
                   <div className="flex flex-col justify-start overflow-hidden px-[9%] pt-[12%] pb-[5%] rotate-[-1deg]">
                     <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>About Me</h3>
-                    <p className="mb-[6%] indent-[1.2em]">
-                      Passionate frontend developer building dynamic, responsive interfaces with React.js and Tailwind CSS. I am expanding into backend and full-stack development with Node.js and Next.js, backed by a strong foundation in DSA and scalable web applications.
+                    <p className="mb-[4%] indent-[1em] text-[0.88em] leading-snug">
+                      Results-driven Software Developer architecting scalable web applications using React.js, Next.js, Node.js, and Express.js, with hands-on experience in RESTful APIs, databases (MongoDB, PostgreSQL), and 3D web tech.
                     </p>
                     <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Education</h4>
-                    <p className="font-semibold text-[0.95em]">GEC Bilaspur</p>
-                    <p className="text-[0.85em] italic">B.Tech in Information Technology</p>
+                    <p className="font-semibold text-[0.92em]">CSVTU Chhattisgarh</p>
+                    <p className="text-[0.82em] italic">B.Tech in Information Technology | GPA: 7.8</p>
                     <p className="text-[0.85em] mb-[4%]">Aug. 2024 – May 2028</p>
                   </div>
 
@@ -372,10 +372,10 @@ const About = () => {
                     <h3 className="font-bold text-center mb-[4%] text-[1.25em] tracking-wide" style={{ color: '#8b5a65' }}>Skills</h3>
                     <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Core Toolkit</h4>
                     <ul className="list-none space-y-[2%] text-[0.9em] mb-[6%]">
-                      <li>• React.js, Next.js & Tailwind CSS</li>
-                      <li>• Node.js & Express.js</li>
+                      <li>• React.js, Next.js, Three.js & Tailwind</li>
+                      <li>• Node.js, Express.js & Prismic CMS</li>
                       <li>• TypeScript, JavaScript & C++</li>
-                      <li>• PostgreSQL, Prisma & Docker</li>
+                      <li>• MongoDB, PostgreSQL, SQLite & Docker</li>
                     </ul>
                     <h4 className="font-bold text-[1.1em] mb-[2%]" style={{ color: '#8b5a65' }}>Contact Info</h4>
                     <a className="text-[0.85em] mb-[1%] pointer-events-auto hover:underline" href={`mailto:${socialLinks.email}`}>📧 {socialLinks.display.email}</a>

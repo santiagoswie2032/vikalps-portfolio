@@ -1,4 +1,4 @@
-﻿import { useDarkMode } from '../../contexts/DarkModeContext';
+import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
 import { Trophy, Award, Medal, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -8,6 +8,15 @@ const Certifications = () => {
   const themeColors = useThemeColors();
 
   const achievements = [
+    {
+      id: 'dsa-lead',
+      title: 'DSA Lead | GDG - GEC Bilaspur',
+      role: 'Lead & Mentor',
+      result: '2025 – Present',
+      description: 'Lead DSA sessions and mentor 50+ students in problem solving and algorithmic thinking.',
+      icon: Award,
+      iconColor: '#6366f1', // Indigo
+    },
     {
       id: 'gdg-techsprint',
       title: 'GDG TechSprint Hackathon 2026',

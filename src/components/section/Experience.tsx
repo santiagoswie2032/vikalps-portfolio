@@ -8,14 +8,14 @@ const Experience = () => {
   const themeColors = useThemeColors();
   const experiences = [
     {
-      title: "Frontend Developer Intern",
+      title: "Frontend Developer & UI/UX Design Intern",
       company: "BrainQuest",
       location: "Remote",
       period: "March 2026 – July 2026",
       description: [
-        "Engineered responsive, dynamic user interfaces using React.js, optimizing component rendering logic to reduce average page load times by 20%.",
-        "Collaborated with product stakeholders to translate UI/UX wireframes into functional, interactive web components, ensuring seamless cross-browser compatibility.",
-        "Integrated RESTful APIs and implemented centralized state management, improving data flow efficiency and reducing client-side bug reports by 15%."
+        "Built and maintained reusable Figma template systems utilizing components and auto layout, enabling the marketing and design teams to quickly iterate on brand variations.",
+        "Collaborated with product stakeholders to design and seamlessly translate UI/UX wireframes into functional, interactive web components, ensuring strict adherence to visual hierarchy and cross-browser compatibility.",
+        "Conducted competitive visual research to iterate on creative concepts, optimizing component rendering logic to reduce page load times by 20% without compromising design quality."
       ]
     },
     {
